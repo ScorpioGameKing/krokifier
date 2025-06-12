@@ -3,7 +3,7 @@ package main
 import (
     "bytes"
     "compress/zlib"
-    "encoding/base64"
+    // "encoding/base64"
     "fmt"
     "bufio"
     "os"
@@ -61,8 +61,8 @@ func main() {
 	    	panic(err)
 	    }
 
-    	result := base64.URLEncoding.EncodeToString(buf.Bytes())
+    	// result := base64.URLEncoding.EncodeToString(buf.Bytes())
 
-    	fmt.Printf("%d : %s\n", i, result)
+    	fmt.Printf("%d : %s\n", i, line)
     }
 }
