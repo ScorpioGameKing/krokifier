@@ -3,7 +3,7 @@ package main
 import (
     "bytes"
     "compress/zlib"
-    // "encoding/base64"
+    //"encoding/base64"
     "fmt"
     "bufio"
     "os"
@@ -42,6 +42,22 @@ func Encode(input string, buf *bytes.Buffer) (int, error) {
     }
 
     return n, nil
+}
+
+func LoadSyntaxFile(path string) ([]string, error) {
+    file, err := os.Open(path)
+    if err != nil {
+        return nil, err
+    }
+	defer file.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines, scanner.Err()
 }
 
 func main() {
