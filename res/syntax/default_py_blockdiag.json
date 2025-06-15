@@ -1,0 +1,9 @@
+{
+	"uml_type": "blockdiag",
+	"language": "python",
+	"diagram": [
+	    {
+			"label": "IMPORTS"
+		}	
+	]
+}

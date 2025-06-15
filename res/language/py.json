@@ -1,0 +1,12 @@
+{
+	"keywords": [
+		{
+			"word": "from"
+			"extends": "."
+		},
+		{
+			"word": "import",
+			"extends": ","
+		}	
+	]
+}

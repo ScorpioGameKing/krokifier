@@ -73,14 +73,10 @@ func LoadSyntaxFile(path string) (*SyntaxFile, error) {
        return nil, err
     }
 
-	var syntax SyntaxFile 
-	err = json.Unmarshal(file, &syntax)
+	var syntax *SyntaxFile 
+	err = json.Unmarshal(file, syntax)
 	
-	if err != nil {
-		return nil, err
-	}
-
-	return &syntax, nil
+	return syntax, nil
 }
 
 func CheckErr(err error) {
@@ -91,18 +87,18 @@ func CheckErr(err error) {
 
 func main() {
 	var err error
-    // var buf bytes.Buffer
-	var syntax SyntaxFile 
-    // var lines []string
+    var buf bytes.Buffer
+	var syntax *SyntaxFile 
+    var lines []string
 
-    // file_path := flag.String("path", "./tests/_nirn_weaver.py", "The file to parse")
-	syntax_path := flag.String("syntax", "./tests/default_py_blockdiag.json", "The syntax file used to generate UML")
+    file_path := flag.String("path", "", "The file to parse")
+	syntax_path := flag.String("syntax", "./res/syntax/default_py_blockdiag.json", "The syntax file used to generate UML")
 
 	flag.Parse()
 	
-    // lines, err = ReadFile(*file_path)
+    lines, err = ReadFile(*file_path)
 
-	// CheckErr(err)
+	CheckErr(err)
 
 	syntax, err = LoadSyntaxFile(*syntax_path)
 
@@ -110,13 +106,13 @@ func main() {
 
 	fmt.Print(syntax)
 
-	// for i, line := range lines {
-		// _, err := Encode(line, &buf)
+	for i, line := range lines {
+		_, err := Encode(line, &buf)
 
-		// CheckErr(err)
+		CheckErr(err)
 
-    	// result := base64.URLEncoding.EncodeToString(buf.Bytes())
+    	//result := base64.URLEncoding.EncodeToString(buf.Bytes())
 
-    	// fmt.Printf("%d : %s\n", i, line)
-    // }
+    	fmt.Printf("%d : %s\n", i, line)
+    }
 }
