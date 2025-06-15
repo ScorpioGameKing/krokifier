@@ -50,7 +50,7 @@ func Encode(input string, buf *bytes.Buffer) (int, error) {
 type SyntaxFile struct {
 	UML_Type string
 	Language string
-	diagram []UMLGroups
+	Diagram []UMLGroups
 }
 
 type LangFile struct {
@@ -66,17 +66,14 @@ type UMLGroups struct {
 	Label string
 }
 
-func LoadSyntaxFile(path string) (*SyntaxFile, error) {
+func LoadSyntaxFile(path string, syntax *SyntaxFile) (error) {
     file, err := ioutil.ReadFile(path)
 
     if err != nil {
-       return nil, err
+        return err
     }
 
-	var syntax *SyntaxFile 
-	err = json.Unmarshal(file, syntax)
-	
-	return syntax, nil
+    return json.Unmarshal(file, syntax)
 }
 
 func CheckErr(err error) {
@@ -88,7 +85,7 @@ func CheckErr(err error) {
 func main() {
 	var err error
     var buf bytes.Buffer
-	var syntax *SyntaxFile 
+	var syntax SyntaxFile 
     var lines []string
 
     file_path := flag.String("path", "", "The file to parse")
@@ -100,11 +97,11 @@ func main() {
 
 	CheckErr(err)
 
-	syntax, err = LoadSyntaxFile(*syntax_path)
+	err = LoadSyntaxFile(*syntax_path, &syntax)
 
 	CheckErr(err)
 
-	fmt.Print(syntax)
+	fmt.Print(syntax.UML_Type)
 
 	for i, line := range lines {
 		_, err := Encode(line, &buf)
