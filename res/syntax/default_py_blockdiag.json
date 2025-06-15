@@ -3,7 +3,47 @@
 	"language": "python",
 	"diagram": [
 	    {
-			"label": "IMPORTS"
-		}	
+			"label": "IMPORT",
+            "keywords": [
+		        {
+			        "word": "from",
+                    "extension": ".",
+			        "extends": true,
+                    "recursive": false,
+                    "inherits": false
+		        },
+		        {
+			        "word": "import",
+			        "extension": ",",
+			        "extends": true,
+                    "recursive": true,
+                    "inherits": false
+		        }	
+	        ]   
+		},
+        {
+            "label": "CLASSES",
+            "keywords": [
+                {
+                    "word": "class",
+                    "extension": "",
+                    "extends": false,
+                    "recursive": false,
+                    "inherits": true
+                }
+            ]
+        },
+        {
+            "label": "METHODS",
+            "keywords": [
+                {
+                    "word": "def",
+                    "extension": "",
+                    "extends": false,
+                    "recursive": false,
+                    "inherits": false
+                }
+            ]
+        }    
 	]
 }
