@@ -173,7 +173,7 @@ func main() {
 												if sub_kword.Extension == "" {
 													parsed_string.WriteString(fmt.Sprintf("%s%s", umltypes.Connecting, sub_words[i+1]))
 												} else {
-													parsed_string.WriteString(fmt.Sprintf("%s%s", umltypes.Connecting, strings.ReplaceAll(sub_words[i+1], sub_kword.Extension, " -> ")))		
+													parsed_string.WriteString(fmt.Sprintf("%s%s", umltypes.Connecting, strings.ReplaceAll(sub_words[i+1], sub_kword.Extension, umltypes.Connecting)))		
 												}	
 											} else {
 												current_string := parsed_string
