@@ -142,4 +142,4 @@ group {
 
 Generating the following BlockDiag.
 
-![Example Block Diagram](https://github.com/scorpiogameking/krokifier/assets/diagram_example.png)
+![Example Block Diagram])(https://github.com/ScorpioGameKing/krokifier/blob/main/assets/diagram_example.png)
