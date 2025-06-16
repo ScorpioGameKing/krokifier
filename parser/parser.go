@@ -103,8 +103,6 @@ func ParseFile(lines []string, syntax *SyntaxFile, umltypes *UMLTypes) (FileGrou
 						
 						if file_group, ok := file.Groups[group.Label]; ok {
 							file_group.RawWords[len(file_group.RawWords)] = words
-							fmt.Printf("%+v\n", file_group)
-						
 						} else {
 							var new_group ParsedGroup
 							var raw_words map[int][]string
@@ -130,5 +128,6 @@ func ParseFile(lines []string, syntax *SyntaxFile, umltypes *UMLTypes) (FileGrou
 		}
 	}
 
+	fmt.Printf("\nFile Out:\n%v", file)
 	return file, nil
 }
