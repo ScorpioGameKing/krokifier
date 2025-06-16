@@ -36,9 +36,11 @@ type UMLTypes struct {
 
 // Used by krokifier to properly build output
 
+type IStringMap = map[int][]string
+
 type ParsedGroup struct {
 	Label string
-	RawWords map[int][]string
+	RawWords IStringMap
 	LeadingKey Keyword
 	SubKeys []Keyword
 }
@@ -78,8 +80,7 @@ func LoadUMLTypes(uml_type string, umltypes *UMLTypes) (error) {
 
 // ------------------------------
 
-func ParseFile(lines []string, syntax *SyntaxFile, umltypes *UMLTypes) (FileGroup, error) {
-	var file FileGroup
+func ParseFile(lines []string, syntax *SyntaxFile, file *FileGroup) (error) {
 	file.Groups = map[string]ParsedGroup{}
 
 	fmt.Printf("\nPrinting Syntax File Diagram\n")
@@ -105,9 +106,9 @@ func ParseFile(lines []string, syntax *SyntaxFile, umltypes *UMLTypes) (FileGrou
 							file_group.RawWords[len(file_group.RawWords)] = words
 						} else {
 							var new_group ParsedGroup
-							var raw_words map[int][]string
+							var raw_words IStringMap
 
-							raw_words = map[int][]string{}
+							raw_words = IStringMap{}
 							raw_words[0] = words
 
 							new_group.Label = group.Label
@@ -128,6 +129,6 @@ func ParseFile(lines []string, syntax *SyntaxFile, umltypes *UMLTypes) (FileGrou
 		}
 	}
 
-	fmt.Printf("\nFile Out:\n%v", file)
-	return file, nil
+	fmt.Printf("\nFile Out:\n%+v", file)
+	return nil
 }

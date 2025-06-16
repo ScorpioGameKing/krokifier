@@ -53,16 +53,18 @@ func CheckErr(err error) {
 
 func main() {
 	var err error
+    var raw_lines []string
+
+	var file parser.FileGroup
 	var syntax parser.SyntaxFile 
 	var umltypes parser.UMLTypes
-    var lines []string
 
     file_path := flag.String("path", "", "The file to parse")
 	syntax_path := flag.String("syntax", "", "The syntax file used to generate UML")
 
 	flag.Parse()
 	
-    lines, err = ReadFile(*file_path)
+    raw_lines, err = ReadFile(*file_path)
 
 	CheckErr(err)
 
@@ -74,6 +76,6 @@ func main() {
 
 	CheckErr(err)
 
-	_, err = parser.ParseFile(lines, &syntax, &umltypes)
+	err = parser.ParseFile(raw_lines, &syntax, &file)
 
 }
