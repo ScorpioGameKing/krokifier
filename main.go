@@ -11,6 +11,7 @@ import (
 	"strings"
 	"io/ioutil"
 	"encoding/json"
+	"github.com/ScorpioGameKing/krokifier/parser"
 )
 
 func ReadFile(path string) ([]string, error) {
@@ -111,7 +112,7 @@ func main() {
 	var output []string
 
     file_path := flag.String("path", "", "The file to parse")
-	syntax_path := flag.String("syntax", "./res/syntax/default_py_blockdiag.json", "The syntax file used to generate UML")
+	syntax_path := flag.String("syntax", "", "The syntax file used to generate UML")
 
 	flag.Parse()
 	
@@ -142,12 +143,11 @@ func main() {
 
 		words := strings.Split(strings.TrimLeft(line, " "), " ")
 		for _, group := range syntax.Diagram {
+			var parsed_string bytes.Buffer
+			var recursive_string []string
 			for _, kword := range group.Keywords {
 				switch words[0] {
 					case kword.Word:
-						var parsed_string bytes.Buffer
-						var recursive_string []string
-						
 						if !kword.Recursive {
 							if kword.Extension == "" {
 								parsed_string.WriteString(words[1])
@@ -191,11 +191,14 @@ func main() {
 							}
 						}
 					}
-					output = append(output, fmt.Sprintf("%s\n", parsed_string.String())) 
+					output = append(output, "group {\n")
+					output = append(output, "}\n")
 				}
 			}
 		}
     	//fmt.Printf("%d : %s\n", i, line)
     }
+
 	fmt.Printf("OUTPUT: %v", output)
+	parser.test("Hello Package!")
 }

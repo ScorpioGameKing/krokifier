@@ -1,0 +1,30 @@
+{
+	"uml_type": "blockdiag",
+	"language": "go",
+	"diagram": [
+        {
+            "label": "FUNCTIONS",
+            "keywords": [
+                {
+                    "word": "func",
+                    "extension": "",
+                    "extends": false,
+                    "recursive": false,
+                    "inherits": false 
+                }
+            ]
+        },
+        {
+            "label": "TYPES",
+            "keywords": [
+                {
+                    "word": "type",
+                    "extension": "",
+                    "extends": false,
+                    "recursive": false,
+                    "inherits": false
+                }
+            ]
+        }    
+	]
+}
