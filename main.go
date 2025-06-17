@@ -78,4 +78,10 @@ func main() {
 
 	err = parser.ParseFile(raw_lines, &syntax, &file)
 
+	CheckErr(err)
+
+	err = parser.GenerateUML(&file, &umltypes)
+
+	CheckErr(err)
+
 }

@@ -132,3 +132,28 @@ func ParseFile(lines []string, syntax *SyntaxFile, file *FileGroup) (error) {
 	fmt.Printf("\nFile Out:\n%+v", file)
 	return nil
 }
+
+func GenerateUML(file *FileGroup, umltypes *UMLTypes) (error) {
+	var output []string
+	var l_pad string
+
+	
+	fmt.Printf("UMLTypes: %+v\n", umltypes)
+
+	output = append(output, "blockdiag {\n")
+	for _, group := range file.Groups {
+		l_pad = "	"
+		fmt.Printf("Group: %s\n", group.Label)
+		output = append(output, fmt.Sprintf("%sgroup {\n%s%slabel='%s'\n", l_pad, l_pad, l_pad, group.Label))
+		l_pad = "		"
+		for _, line := range group.RawWords {		
+			fmt.Printf("String Slice: %v\n", line[1])
+			output = append(output, fmt.Sprintf("%s%s\n", l_pad, line[1]))
+		}
+		l_pad = "	"
+		output = append(output, fmt.Sprintf("%s}\n", l_pad))
+	}
+	output = append(output, "}\n")
+	fmt.Printf("Output: %+v", output)
+	return nil
+}
