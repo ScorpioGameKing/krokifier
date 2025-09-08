@@ -29,6 +29,11 @@ type Keyword struct {
 }
 
 type UMLTypes struct {
+	Header string
+	Group string
+	Label string
+	Opener string
+	Closer string	
 	Connecting string
 }
 
@@ -55,11 +60,9 @@ type FileGroup struct {
 
 func LoadSyntaxFile(path string, syntax *SyntaxFile) (error) {
     file, err := ioutil.ReadFile(path)
-
     if err != nil {
         return err
     }
-
     return json.Unmarshal(file, syntax)
 }
 
@@ -70,11 +73,9 @@ func LoadUMLTypes(uml_type string, umltypes *UMLTypes) (error) {
 			path = "./res/language/blockdiag.json"
 	}
 	file, err := ioutil.ReadFile(path)
-
 	if err != nil {
 		return err
 	}
-
 	return json.Unmarshal(file, umltypes)
 }
 
@@ -82,15 +83,11 @@ func LoadUMLTypes(uml_type string, umltypes *UMLTypes) (error) {
 
 func ParseFile(lines []string, syntax *SyntaxFile, file *FileGroup) (error) {
 	file.Groups = map[string]ParsedGroup{}
-
 	fmt.Printf("\nPrinting Syntax File Diagram\n")
-
 	for i, group := range syntax.Diagram {
 		fmt.Printf("%d : %+v\n", i, group)
 	}
-
 	fmt.Printf("\nParsing Input File\n")
-
 	for _, line := range lines {
 		//fmt.Printf("%d : %s\n", i, line)
 		
@@ -107,10 +104,8 @@ func ParseFile(lines []string, syntax *SyntaxFile, file *FileGroup) (error) {
 						} else {
 							var new_group ParsedGroup
 							var raw_words IStringMap
-
 							raw_words = IStringMap{}
 							raw_words[0] = words
-
 							new_group.Label = group.Label
 							new_group.RawWords = raw_words
 							new_group.LeadingKey = kword
@@ -128,7 +123,6 @@ func ParseFile(lines []string, syntax *SyntaxFile, file *FileGroup) (error) {
 			}
 		}
 	}
-
 	fmt.Printf("\nFile Out:\n%+v", file)
 	return nil
 }
@@ -136,19 +130,19 @@ func ParseFile(lines []string, syntax *SyntaxFile, file *FileGroup) (error) {
 func GenerateUML(file *FileGroup, umltypes *UMLTypes) (error) {
 	var output []string
 	var l_pad string
-
 	
 	fmt.Printf("UMLTypes: %+v\n", umltypes)
-
-	output = append(output, "blockdiag {\n")
+	output = append(output, fmt.Sprintf("%s %s\n", umltypes.Header, umltypes.Opener))
 	for _, group := range file.Groups {
 		l_pad = "	"
 		fmt.Printf("Group: %s\n", group.Label)
-		output = append(output, fmt.Sprintf("%sgroup {\n%s%slabel='%s'\n", l_pad, l_pad, l_pad, group.Label))
+		output = append(output, fmt.Sprintf("%s%s %s\n", l_pad, umltypes.Group, umltypes.Opener))
 		l_pad = "		"
+		output = append(output, fmt.Sprintf("%s%s'%s'\n", l_pad, umltypes.Label, group.Label))
 		for _, line := range group.RawWords {		
 			fmt.Printf("String Slice: %v\n", line[1])
-			output = append(output, fmt.Sprintf("%s%s\n", l_pad, line[1]))
+			line_connect := strings.ReplaceAll(line[1], ".", umltypes.Connecting)
+			output = append(output, fmt.Sprintf("%s%s\n", l_pad, line_connect))
 		}
 		l_pad = "	"
 		output = append(output, fmt.Sprintf("%s}\n", l_pad))

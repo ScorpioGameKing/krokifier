@@ -1,3 +1,8 @@
 {
+    "header": "blockdiag",
+    "group": "group",
+    "label": "label=",
+    "opener": "{",
+    "closer": "}",
     "connecting": " -> "
 }
